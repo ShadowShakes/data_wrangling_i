@@ -87,4 +87,4 @@ write_csv(lotr_words_df, "data/lotr_words_df.csv")
 dont_do_this_df = read.csv("data/FAS_litters.csv")
 ```
 
-if do not want to update the data becauses its privacy or size, type in `.gitignore` and add the data source address.
+if do not want to update the data because its privacy or size, type in `.gitignore` and add the data source address.
