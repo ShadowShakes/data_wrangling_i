@@ -1,10 +1,13 @@
 ---
-title: "Simple document"
+title: "Data Import"
 output: github_document
 ---
 
 ```{r}
+library(tidyverse)
 library(readr)
+library(readxl)
+library(haven)
 ```
 
 
@@ -18,4 +21,70 @@ Let's import data using the 'readr' package
 litters_df = read_csv("data/FAS_litters.csv")
 litters_df = janitor::clean_names(litters_df)
 ```
+`janitor::clean_names` is used to clean the special characters in the column names in order to prevent bugs in further data loading
 
+
+Look at the data
+
+```{r}
+litters_df
+head(litters_df)
+tail(litters_df)
+```
+
+
+```{r, eval = FALSE}
+View(litters_df)
+```
+
+```{r}
+skimr::skim(litters_df)
+```
+
+`read..csv` options ..
+
+```{r}
+read_csv("data/FAS_litters.csv", na = c("","NA", 999, 88), skip = 2)
+```
+That means you could manually set the NA-defined value.
+`skip` allows you to skip the first several rows when the author added useless info into data.
+
+
+## Other file formats
+
+We need to read in an excel spreadsheet
+```{r}
+mlb_df = read_excel("data/mlb11.xlsx")
+```
+
+```{r}
+lotr_words_df = 
+  read_excel(
+    "data/LotR_Words.xlsx",
+    range = "B3:D6"
+  )
+```
+
+## Still more formats
+
+Read in a SAS dataset.
+
+Remember not to commit or push a temp data file appeared on the rightside. Close it and then commit or push the files.
+```{r}
+pulse_df =read_sas("data/public_pulse_data.sas7bdat")
+```
+
+
+## Data Export
+```{r}
+write_csv(lotr_words_df, "data/lotr_words_df.csv")
+```
+
+
+## Why not base R??
+
+```{r}
+dont_do_this_df = read.csv("data/FAS_litters.csv")
+```
+
+if do not want to update the data becaues its privacy or size, type in `.gitignore` and adde the data source address.
